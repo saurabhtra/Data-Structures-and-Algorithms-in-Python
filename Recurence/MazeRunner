@@ -1,0 +1,45 @@
+mat = [[1, 0, 0, 0], [1, 1, 0, 1], [1, 1, 0, 0], [0, 1, 1, 1]]
+"""
+1 0 0 0
+1 1 0 1
+1 1 0 0
+0 1 1 1
+"""
+n=4
+vis=[[0]*4 for _ in range(4)]
+ans=[]
+def solver(row,col,subans):
+    if row==n-1 and col ==n-1:
+        ans.append("".join(subans[:]))
+        return
+    
+    #movedown
+
+    if row+1 < n and mat[row+1][col] ==1 and vis[row+1][col] ==0:
+        vis[row][col] =1
+        subans.append("D")
+        solver(row+1,col,subans)
+        subans.pop()
+
+        vis[row][col] =0
+    if col-1 >= 0 and mat[row][col-1] ==1 and vis[row][col-1] ==0:
+        vis[row][col] =1
+        subans.append("L")
+        solver(row,col-1,subans)
+        subans.pop()
+        vis[row][col] =0
+    if col+1 < n and mat[row][col+1] ==1 and vis[row][col+1] ==0:
+        vis[row][col] =1
+        subans.append("R")
+        solver(row,col+1,subans)
+        subans.pop()
+        vis[row][col] =0
+    if row >0  and mat[row-1][col] ==1 and vis[row-1][col] ==0:
+        vis[row][col] =1
+        subans.append("U")
+        solver(row-1,col,subans)
+        subans.pop()
+        vis[row][col] =0
+solver(0,0,[])
+print(ans)
+    
